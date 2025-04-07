@@ -39,7 +39,7 @@ describe("DocumentController", () => {
     expect(controller).toBeDefined();
   });
 
-  it("should have auth for createDocument", () => {
+  it("should have auth for create document", () => {
     const handlers = reflect.get(
       CHECK_PERMISSIONS_KEY,
       controller.createDocument,
@@ -50,7 +50,7 @@ describe("DocumentController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call createDocument", async () => {
+  it("should call create document", async () => {
     jest.spyOn(service, "create").mockResolvedValue({
       id: 1,
     } as any);
@@ -75,7 +75,7 @@ describe("DocumentController", () => {
     });
   });
 
-  it("should have auth for getDocumentById", () => {
+  it("should have auth for get document by id", () => {
     const handlers = reflect.get(
       CHECK_PERMISSIONS_KEY,
       controller.getDocumentById,
@@ -86,7 +86,7 @@ describe("DocumentController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call getDocumentById", async () => {
+  it("should call get document by id", async () => {
     const stream = {
       pipe: jest.fn(),
     };
@@ -99,7 +99,7 @@ describe("DocumentController", () => {
     expect(result).toBeInstanceOf(StreamableFile);
   });
 
-  it("should have auth for updateDocument", () => {
+  it("should have auth for update document", () => {
     const handlers = reflect.get(
       CHECK_PERMISSIONS_KEY,
       controller.updateDocument,
@@ -110,7 +110,7 @@ describe("DocumentController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call updateDocument", async () => {
+  it("should call update document", async () => {
     jest.spyOn(service, "updateDocument").mockResolvedValue({
       id: 1,
     } as any);
@@ -132,7 +132,7 @@ describe("DocumentController", () => {
     });
   });
 
-  it("should have auth for deleteDocument", () => {
+  it("should have auth for delete document", () => {
     const handlers = reflect.get(
       CHECK_PERMISSIONS_KEY,
       controller.deleteDocument,
@@ -143,7 +143,7 @@ describe("DocumentController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call deleteDocument", async () => {
+  it("should call delete document", async () => {
     jest.spyOn(service, "deleteDocument").mockResolvedValue({
       id: 1,
     } as any);
@@ -156,7 +156,7 @@ describe("DocumentController", () => {
     });
   });
 
-  it("should have auth for listDocuments", () => {
+  it("should have auth for list documents", () => {
     const handlers = reflect.get(
       CHECK_PERMISSIONS_KEY,
       controller.listDocuments,
@@ -167,12 +167,8 @@ describe("DocumentController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call listDocuments", async () => {
-    const documents = [
-      {
-        id: 1,
-      },
-    ];
+  it("should call list documents", async () => {
+    const documents = [{ id: 1 }];
 
     jest.spyOn(service, "listDocuments").mockResolvedValue(documents as any);
 
