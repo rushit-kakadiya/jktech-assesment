@@ -35,7 +35,7 @@ describe("IngestionController", () => {
     expect(controller).toBeDefined();
   });
 
-  it("should have auth for create new ingestion", () => {
+  it("Validates permission checks on ingestion creation endpoint", () => {
     const handlers = reflect.get(CHECK_PERMISSIONS_KEY, controller.create);
     expect(handlers).toHaveLength(1);
     expect(handlers[0]).toBeInstanceOf(Function);
@@ -43,7 +43,7 @@ describe("IngestionController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call add Ingestion", async () => {
+  it("Tests proper service delegation when creating new ingestion requests", async () => {
     jest.spyOn(service, "addIngestion").mockResolvedValue({
       message: "success",
       ingestion: {
@@ -72,7 +72,7 @@ describe("IngestionController", () => {
     });
   });
 
-  it("should have auth for find an ingestion", () => {
+  it("Verifies permission requirements for retrieving ingestion details", () => {
     const handlers = reflect.get(CHECK_PERMISSIONS_KEY, controller.findOne);
     expect(handlers).toHaveLength(1);
     expect(handlers[0]).toBeInstanceOf(Function);
@@ -80,7 +80,7 @@ describe("IngestionController", () => {
     expect(handlers[0]({ can: () => true })).toBeTruthy();
   });
 
-  it("should call to find ingestion by id", async () => {
+  it("Ensures correct service calls when requesting specific ingestion information", async () => {
     jest.spyOn(service, "findIngestionById").mockResolvedValue({
       document: {
         id: 1,
