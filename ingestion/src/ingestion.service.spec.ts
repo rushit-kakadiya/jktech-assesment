@@ -28,11 +28,11 @@ describe('AppService', () => {
     service = module.get(AppService);
   });
 
-  it('should be defined', () => {
+  it('Verifies service initialization works correctly', () => {
     expect(service).toBeDefined();
   });
 
-  it('should add a new ingestion', async () => {
+  it('Confirms new ingestion data is properly added and triggers the expected event emission', async () => {
     const data = {
       documentId: 1,
       userId: 1,
@@ -46,7 +46,7 @@ describe('AppService', () => {
     expect(eventEmitter.emit).toHaveBeenCalledWith('add.ingestion', result);
   });
 
-  it('should sleep for a given time', async () => {
+  it('Tests the sleep utility function pauses execution for the specified duration', async () => {
     const ms = 1000;
 
     const result = await service.sleep(ms);
@@ -54,7 +54,7 @@ describe('AppService', () => {
     expect(result).toBeUndefined();
   });
 
-  it('should change the status of the ingestion to success', async () => {
+  it('Verifies successful ingestion processing after random delay when random value is 0.5', async () => {
     const payload = new IngestionEntity();
     payload.id = 1;
 
@@ -69,7 +69,7 @@ describe('AppService', () => {
     expect(repo.save).toHaveBeenCalledWith(payload);
   });
 
-  it('should change the status of the ingestion to failed', async () => {
+  it('Confirms failed ingestion handling after random delay when random value is 0.4', async () => {
     const payload = new IngestionEntity();
     payload.id = 1;
 
@@ -84,7 +84,7 @@ describe('AppService', () => {
     expect(repo.save).toHaveBeenCalledWith(payload);
   });
 
-  it('should get an ingestion', async () => {
+  it('Validates retrieval of ingestion records by ID from the repository', async () => {
     const ingestionId = 1;
 
     repo.findOne.mockResolvedValue({ id: ingestionId } as any);

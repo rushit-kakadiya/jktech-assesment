@@ -1,17 +1,17 @@
 import { convertBytes } from "./convertByte";
 
 describe("convertByte", () => {
-  it("should convert bytes to KB, MB, GB", () => {
+  it("Should accurately convert byte values to the appropriate unit (KB, MB, GB) with correct formatting.", () => {
     expect(convertBytes(1024)).toBe("1.0 KB");
     expect(convertBytes(1024 * 1024)).toBe("1.0 MB");
     expect(convertBytes(1024 * 1024 * 1024)).toBe("1.0 GB");
   });
 
-  it('should return "n/a" if bytes is 0', () => {
+  it('Should return "n/a" when the byte value is zero, indicating no meaningful file size to display.', () => {
     expect(convertBytes(0)).toBe("n/a");
   });
 
-  it('should return "Bytes" if bytes is less than 1024', () => {
+  it('Should display raw byte count when value is below 1KB threshold, maintaining precision for small files.', () => {
     expect(convertBytes(1023)).toBe("1023 Bytes");
   });
 });
