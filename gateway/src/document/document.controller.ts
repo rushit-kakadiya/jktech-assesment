@@ -48,9 +48,7 @@ export class DocumentController {
 
     return {
       message: "Document created",
-      document: {
-        id: newDocument.id,
-      },
+      document: { id: newDocument.id },
     };
   }
 
@@ -87,9 +85,7 @@ export class DocumentController {
   ) {
     await this.documentService.updateDocument(id, document);
 
-    return {
-      message: "Document updated",
-    };
+    return { message: "Document updated" };
   }
 
   @Get()
@@ -106,8 +102,6 @@ export class DocumentController {
   async deleteDocument(@Param("id", ParseIntPipe) id: number) {
     await this.documentService.deleteDocument(id);
 
-    return {
-      message: "Document deleted",
-    };
+    return { message: "Document deleted" };
   }
 }

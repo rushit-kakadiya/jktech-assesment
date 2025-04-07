@@ -44,11 +44,7 @@ export class DocumentService {
    */
   async getDocumentById(id: number) {
     const document = await this.documentRepository.findOne({ where: { id } });
-
-    if (!document) {
-      throw new NotFoundException("Document not found");
-    }
-
+    if (!document) throw new NotFoundException("Document not found");
     return document;
   }
 
@@ -59,12 +55,10 @@ export class DocumentService {
    */
   async retrieveDocument(id: number) {
     const document = await this.getDocumentById(id);
-
     // get read stream from the file system
     const readStream = createReadStream(
       join(this.configService.get("upload.path") as string, document.name),
     );
-
     return readStream;
   }
 
@@ -99,7 +93,6 @@ export class DocumentService {
    */
   async deleteDocument(id: number) {
     const document = await this.getDocumentById(id);
-
     await rm(
       join(this.configService.get("upload.path") as string, document.name),
     );
@@ -109,7 +102,6 @@ export class DocumentService {
   async getSizeOfDocument(path: string) {
     const stats = await stat(path);
     const size = stats.size;
-
     // convert it to human readable format
     return convertBytes(size);
   }
