@@ -11,7 +11,7 @@ Use this curl to get access to the application as an admin
 curl --location 'http://localhost:3000/user/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "email": "superadmin@email.com",
+    "email": "super@admin.com",
     "password": "admin"
 }'
 ```

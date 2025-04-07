@@ -1,7 +1,7 @@
 {
-  "name": "ingestion",
+  "name": "ingestion-backend",
   "version": "0.0.1",
-  "description": "",
+  "description": "Ingestion backend functionality",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
