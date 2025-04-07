@@ -47,7 +47,7 @@ describe("UserController", () => {
   });
 
   describe("register method", () => {
-    it("should have auth for register", () => {
+    it("should have auth for user register", () => {
       const handlers = reflect.get(CHECK_PERMISSIONS_KEY, controller.register);
       expect(handlers).toHaveLength(1);
       expect(handlers[0]).toBeInstanceOf(Function);
@@ -55,7 +55,7 @@ describe("UserController", () => {
       expect(handlers[0]({ can: () => true })).toBeTruthy();
     });
 
-    it("should register user", async () => {
+    it("should register new user", async () => {
       jest.spyOn(authService, "register").mockResolvedValue({
         ...mockUserEntity,
         token: "token",
@@ -80,7 +80,7 @@ describe("UserController", () => {
   });
 
   describe("login method", () => {
-    it("should login user", async () => {
+    it("should user login", async () => {
       jest.spyOn(authService, "login").mockResolvedValue("mock-token");
 
       expect(
