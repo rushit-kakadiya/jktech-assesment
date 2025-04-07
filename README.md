@@ -2,7 +2,7 @@
 
 ```sh
   # to start bulding the services
-  docker-compose up --build 
+  docker-compose up --build
 ```
 
 Use this curl to get access to the application as an admin
@@ -16,28 +16,64 @@ curl --location 'http://localhost:3000/user/login' \
 }'
 ```
 
-## Types of Users
-1. Admin
-  
-  This user can any operations in the application such as
+## Key Components
 
-  - Registering new user
-  - CRUD of Document
-  - Create and get details of an Ingestion
+### 1. Controllers
+
+#### User Controller (`/user`)
+- `POST /user/login` - JWT authentication
+- `POST /user/register` - User registration (Admin only)
+
+#### Document Controller (`/document`)
+- `POST /document` - Upload new document (Admin/Editor)
+- `GET /document/:id` - Get document metadata (All roles)
+- `PUT /document/:id` - Update document (Admin/Editor)
+- `GET /document/` - Get all document metadata (All roles)
+- `DELETE /document/:id` - Delete document (Admin/Editor)
+
+#### Ingestion Controller (`/ingestion`)
+- `POST /ingestion` - Trigger document ingestion (Admin/Editor)
+- `GET /ingestion/:id` - Check ingestion status (All roles)
+
+### 2. Services
+
+#### User Module
+- `UserService`: User CRUD operations
+- `AuthService`: JWT token generation/validation
+- `PasswordService`: Password hashing/verification
+
+#### Document Module
+- `DocumentService`: Document metadata management
+- `StorageService`: File storage handling
+
+#### Ingestion Module
+- `IngestionService`: Ingestion lifecycle management
+- `IngestionClient`: Communication with mock ingestion service
+- `IngestionStatusService`: Status tracking and retry logic
+
+## Types of Users
+
+1. Admin
+
+This user can any operations in the application such as
+
+- Registering new user
+- CRUD of Document
+- Create and get details of an Ingestion
 
 2. Editor
 
-  This typeof user can perform any operation on the document
+This typeof user can perform any operation on the document
 
-  - CRUD of Document
-  - Create and Details of ingestion
+- CRUD of Document
+- Create and Details of ingestion
 
 3. Viewer
 
-  This typeof user can perform any operation on the document
+This typeof user can perform any operation on the document
 
-  - Details of ingestion
-  - Read any document
+- Details of ingestion
+- Read any document
 
 ## NOTE
 
@@ -45,13 +81,13 @@ The swagger document can be accessible under `http://localhost:3000/api`
 
 ## User Authentication
 
-The codes for authentication can be found inside of gateway under the user module. Passport's JWT auth is used for this purpose. An Auth guard is places on all those controller api's which requires user to be authenticated. 
+The codes for authentication can be found inside of gateway under the user module. Passport's JWT auth is used for this purpose. An Auth guard is places on all those controller api's which requires user to be authenticated.
 
 Please see these locations,
 
 - `gateway/src/global/guards/jwt-auth.guard.ts`
 
-- `gateway/src/user/services/auth/strategies/jwt/jwt.strategy.ts` 
+- `gateway/src/user/services/auth/strategies/jwt/jwt.strategy.ts`
 
 ## User Authorization
 
@@ -67,10 +103,9 @@ The guard is then used to identify the invoker's list of permission and whether 
 
 `gateway/src/global/guards/permission.guard.ts`
 
-
 ## mocked Ingestion Service
 
 The ingestion service is another Nestjs microservice that run along with gateway. It has apis to add and get details of the ingestion as `@MessagePattern` with linked to their command.
 
-NOTE: 
-Once a new ingestion is added,  to update it's status an event is fired. That event is then asynchronously handled to update it's status to success / failed.
+NOTE:
+Once a new ingestion is added, to update it's status an event is fired. That event is then asynchronously handled to update it's status to success / failed.
