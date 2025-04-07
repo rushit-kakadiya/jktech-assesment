@@ -14,7 +14,7 @@ describe('getConfig', () => {
     process.env.REDIS_PASSWORD = 'redis_password';
   });
 
-  it('should return the correct configuration when all environment variables are set', () => {
+  it('Ensures configuration correctly loads all environment variables with proper types and values', () => {
     const config = getConfig();
     expect(config).toEqual({
       port: 4000,
@@ -34,7 +34,7 @@ describe('getConfig', () => {
     });
   });
 
-  it('should use default values when environment variables are not set', () => {
+  it('Verifies default values are applied when environment variables are missing', () => {
     delete process.env.PORT;
     delete process.env.JWT_EXPIRY;
     delete process.env.DB_PORT;
@@ -47,7 +47,7 @@ describe('getConfig', () => {
     expect(config.redis.port).toBe(6379);
   });
 
-  it('should handle missing optional environment variables', () => {
+  it('Confirms optional environment variables can be safely omitted without errors', () => {
     delete process.env.REDIS_PASSWORD;
 
     const config = getConfig();
@@ -55,15 +55,15 @@ describe('getConfig', () => {
   });
 
   describe('parseIntSafe', () => {
-    it('should return fallback when num is undefined', () => {
+    it('Tests that parseIntSafe returns fallback value when input is undefined', () => {
       expect(parseIntSafe(undefined, 10)).toEqual(10);
     });
 
-    it('should use the given num', () => {
+    it('Ensures parseIntSafe correctly parses valid numeric strings', () => {
       expect(parseIntSafe('10', 10)).toEqual(10);
     });
 
-    it('should give fallback if provided num evaluates to NaN', () => {
+    it('Verifies parseIntSafe returns fallback value when parsing invalid strings', () => {
       expect(parseIntSafe('abc', 10)).toEqual(10);
     });
   });
